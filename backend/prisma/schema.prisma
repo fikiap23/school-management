@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// /*
+// |--------------------------------------------------------------------------
+// | Enum Value
+// |--------------------------------------------------------------------------
+// */
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+// /*
+// |--------------------------------------------------------------------------
+// | Model
+// |--------------------------------------------------------------------------
+// */
+
+model Student {
+  id         String   @id @default(uuid())
+  name       String
+  nisn       String   @unique
+  nis        String   @unique
+  nik        String   @unique
+  gender     Gender
+  address    String
+  birthdate  DateTime
+  birthplace String
+  password   String
+  idClass    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  class  Class    @relation(fields: [idClass], references: [id])
+  result Result[]
+}
+
+model Class {
+  id        String   @id @default(uuid())
+  grade     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student Student[]
+  teacher TeacherOnClass[]
+}
+
+model Teacher {
+  id        String   @id @default(uuid())
+  name      String
+  nuptk     String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacherOnClass TeacherOnClass[]
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  name      String
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subject {
+  id        String   @id @default(uuid())
+  name      String
+  code      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacherOnClass TeacherOnClass[]
+}
+
+model TeacherOnClass {
+  id        String @id @default(uuid())
+  teacherId String
+  classId   String
+  subjectId String
+
+  teacher   Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  result Result[]
+}
+
+model Result {
+  id               String   @id @default(uuid())
+  studentId        String
+  teacherOnClassId String
+  dailyScore       String
+  midScore         String
+  endScore         String
+  finalScore       String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  student        Student        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherOnClass TeacherOnClass @relation(fields: [teacherOnClassId], references: [id], onDelete: Cascade)
+}
