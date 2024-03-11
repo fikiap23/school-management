@@ -34,7 +34,7 @@ export default function LoginView() {
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField name="nis" label="NIS" />
 
         <TextField
           name="password"
@@ -101,12 +101,6 @@ export default function LoginView() {
             Sign in to Dashboard
           </Typography>
           {renderForm}
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            Don’t have an account?
-            <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-              Get started
-            </Link>
-          </Typography>
         </Card>
       </Stack>
     </Box>

@@ -1,12 +1,15 @@
 // ---
 import * as React from 'react';
 
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
@@ -44,59 +47,74 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 //   createData('Gingerbread', 356, 16.0, 49, 3.9),
 // ];
 export default function ProfileView() {
+  const birthDate = `${account.location}, ${account.birthDate.getDate()}-${account.birthDate.getMonth()}-${account.birthDate.getFullYear()}`;
   return (
-    <Container sx={{ width: '65%' }} borderRadius={2}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 500, width: '100%', boxShadow: 3 }} aria-label="customized table">
-          <TableBody>
-            <StyledTableRow>
-              <StyledTableCell component="th" scope="row">
-                Nama
-              </StyledTableCell>
-              <StyledTableCell align="left" sx={{ width: '10%' }}>
-                :
-              </StyledTableCell>
-              <StyledTableCell align="left">{account.displayName}</StyledTableCell>
-            </StyledTableRow>
-            <StyledTableRow>
-              <StyledTableCell component="th" scope="row">
-                Email
-              </StyledTableCell>
-              <StyledTableCell align="left" sx={{ width: '10%' }}>
-                :
-              </StyledTableCell>
-              <StyledTableCell align="left">{account.email}</StyledTableCell>
-            </StyledTableRow>
-            <StyledTableRow>
-              <StyledTableCell component="th" scope="row">
-                Tempat, Tanggal Lahir
-              </StyledTableCell>
-              <StyledTableCell align="left" sx={{ width: '10%' }}>
-                :
-              </StyledTableCell>
-              <StyledTableCell align="left">{account.location}</StyledTableCell>
-            </StyledTableRow>
-            <StyledTableRow>
-              <StyledTableCell component="th" scope="row">
-                Jenis Kelamin
-              </StyledTableCell>
-              <StyledTableCell align="left" sx={{ width: '10%' }}>
-                :
-              </StyledTableCell>
-              <StyledTableCell align="left">{account.gender}</StyledTableCell>
-            </StyledTableRow>
-            <StyledTableRow>
-              <StyledTableCell component="th" scope="row">
-                Agama
-              </StyledTableCell>
-              <StyledTableCell align="left" sx={{ width: '10%' }}>
-                :
-              </StyledTableCell>
-              <StyledTableCell align="left">{account.religion}</StyledTableCell>
-            </StyledTableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <Container sx={{ width: '100%' }} borderRadius={2}>
+      <Card
+        component={Stack}
+        spacing={3}
+        direction="column"
+        sx={{
+          px: 3,
+          py: 5,
+          borderRadius: 2,
+        }}
+      >
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Profile
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 500, width: '100%', boxShadow: 3 }} aria-label="customized table">
+            <TableBody>
+              <StyledTableRow>
+                <StyledTableCell component="th" scope="row" sx={{ width: '40%' }}>
+                  Nama
+                </StyledTableCell>
+                <StyledTableCell align="left" sx={{ width: '10%' }}>
+                  :
+                </StyledTableCell>
+                <StyledTableCell align="left">{account.displayName}</StyledTableCell>
+              </StyledTableRow>
+              <StyledTableRow>
+                <StyledTableCell component="th" scope="row">
+                  Email
+                </StyledTableCell>
+                <StyledTableCell align="left" sx={{ width: '10%' }}>
+                  :
+                </StyledTableCell>
+                <StyledTableCell align="left">{account.email}</StyledTableCell>
+              </StyledTableRow>
+              <StyledTableRow>
+                <StyledTableCell component="th" scope="row">
+                  Tempat, Tanggal Lahir
+                </StyledTableCell>
+                <StyledTableCell align="left" sx={{ width: '10%' }}>
+                  :
+                </StyledTableCell>
+                <StyledTableCell align="left">{birthDate}</StyledTableCell>
+              </StyledTableRow>
+              <StyledTableRow>
+                <StyledTableCell component="th" scope="row">
+                  Jenis Kelamin
+                </StyledTableCell>
+                <StyledTableCell align="left" sx={{ width: '10%' }}>
+                  :
+                </StyledTableCell>
+                <StyledTableCell align="left">{account.gender}</StyledTableCell>
+              </StyledTableRow>
+              <StyledTableRow>
+                <StyledTableCell component="th" scope="row">
+                  Agama
+                </StyledTableCell>
+                <StyledTableCell align="left" sx={{ width: '10%' }}>
+                  :
+                </StyledTableCell>
+                <StyledTableCell align="left">{account.religion}</StyledTableCell>
+              </StyledTableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
     </Container>
   );
 }
