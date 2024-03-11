@@ -22,6 +22,12 @@ enum Gender {
   FEMALE
 }
 
+enum RoleUser {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
 // /*
 // |--------------------------------------------------------------------------
 // | Model
@@ -39,6 +45,7 @@ model Student {
   birthdate  DateTime
   birthplace String
   password   String
+  role       RoleUser @default(STUDENT)
   idClass    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -63,6 +70,7 @@ model Teacher {
   nuptk     String   @unique
   email     String   @unique
   password  String
+  role      RoleUser @default(TEACHER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -75,6 +83,7 @@ model Admin {
   username  String   @unique
   email     String   @unique
   password  String
+  role      RoleUser @default(ADMIN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
