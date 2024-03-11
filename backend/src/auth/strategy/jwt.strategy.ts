@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         id: payload.sub,
       },
     });
-
+    if (user) return true;
     // check token for teacher
     if (!user) {
       const userTeacher = await this.prisma.teacher.findUnique({
@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
           id: payload.sub,
         },
       });
-      if (!userTeacher) return false;
+      if (userTeacher) return true;
     }
 
     // check token for super admin user
@@ -41,10 +41,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
           id: payload.sub,
         },
       });
-      if (!userAdmin) return false;
+      if (userAdmin) return true;
     }
 
-    // return true if data exist
-    return true;
+    // return true if data not exist
+    return false;
   }
 }
