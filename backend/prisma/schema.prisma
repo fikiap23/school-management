@@ -74,7 +74,6 @@ model AcademicYear {
 model Class {
   id             String @id @default(uuid())
   grade          String
-  semesterId     String
   academicYearId String
 
   createdAt DateTime @default(now())
