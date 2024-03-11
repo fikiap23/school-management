@@ -1,2 +1,2 @@
-export * from './access.decorator'
-export * from './roles.decorator'
+export * from './access.decorator';
+export * from './roles.decorator';
