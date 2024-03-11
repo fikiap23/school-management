@@ -6,9 +6,17 @@ generator client {
   binaryTargets = ["native", "linux-musl"]
 }
 
+// for local
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// for vercel
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 // /*
@@ -20,6 +28,23 @@ datasource db {
 enum Gender {
   MALE
   FEMALE
+}
+
+enum RoleUser {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum Semester {
+  GANJIL
+  GENAP
+}
+
+enum Grade {
+  FIRST
+  SECOND
+  THIRD
 }
 
 // /*
@@ -38,7 +63,9 @@ model Student {
   address    String
   birthdate  DateTime
   birthplace String
+  avatar     String
   password   String
+  role       RoleUser @default(STUDENT)
   idClass    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -48,10 +75,15 @@ model Student {
 }
 
 model Class {
-  id        String   @id @default(uuid())
-  grade     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(uuid())
+  name         String   @unique
+  grade        Grade
+  academicYear String
+  startDate    DateTime
+  endDate      DateTime
+  semester     Semester
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   student Student[]
   teacher TeacherOnClass[]
@@ -63,6 +95,8 @@ model Teacher {
   nuptk     String   @unique
   email     String   @unique
   password  String
+  avatar    String
+  role      RoleUser @default(TEACHER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -75,6 +109,7 @@ model Admin {
   username  String   @unique
   email     String   @unique
   password  String
+  role      RoleUser @default(ADMIN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -82,6 +117,7 @@ model Admin {
 model Subject {
   id        String   @id @default(uuid())
   name      String
+  shortName String
   code      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -105,15 +141,19 @@ model TeacherOnClass {
 }
 
 model Result {
-  id               String   @id @default(uuid())
+  id               String @id @default(uuid())
   studentId        String
   teacherOnClassId String
-  dailyScore       String
-  midScore         String
-  endScore         String
-  finalScore       String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+
+  kkm                  Float
+  knowledgeScore       Float
+  skillsScore          Float
+  predicatKnowledge    String
+  predicatSkill        String
+  descriptionSkill     String
+  descriptionKnowledge String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 
   student        Student        @relation(fields: [studentId], references: [id], onDelete: Cascade)
   teacherOnClass TeacherOnClass @relation(fields: [teacherOnClassId], references: [id], onDelete: Cascade)
