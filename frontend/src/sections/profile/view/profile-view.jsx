@@ -45,27 +45,54 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ];
 export default function ProfileView() {
   return (
-    <Container sx={{ width: '65%', border: 1 }} borderRadius={2}>
+    <Container sx={{ width: '65%' }} borderRadius={2}>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 500, width: '100%' }} aria-label="customized table">
+        <Table sx={{ minWidth: 500, width: '100%', boxShadow: 3 }} aria-label="customized table">
           <TableBody>
             <StyledTableRow>
               <StyledTableCell component="th" scope="row">
                 Nama
               </StyledTableCell>
-              <StyledTableCell align="right" sx={{ width: '10%' }}>
+              <StyledTableCell align="left" sx={{ width: '10%' }}>
                 :
               </StyledTableCell>
-              <StyledTableCell align="right">{account.displayName}</StyledTableCell>
+              <StyledTableCell align="left">{account.displayName}</StyledTableCell>
             </StyledTableRow>
             <StyledTableRow>
               <StyledTableCell component="th" scope="row">
                 Email
               </StyledTableCell>
-              <StyledTableCell align="right" sx={{ width: '10%' }}>
+              <StyledTableCell align="left" sx={{ width: '10%' }}>
                 :
               </StyledTableCell>
-              <StyledTableCell align="right">{account.email}</StyledTableCell>
+              <StyledTableCell align="left">{account.email}</StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell component="th" scope="row">
+                Tempat, Tanggal Lahir
+              </StyledTableCell>
+              <StyledTableCell align="left" sx={{ width: '10%' }}>
+                :
+              </StyledTableCell>
+              <StyledTableCell align="left">{account.location}</StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell component="th" scope="row">
+                Jenis Kelamin
+              </StyledTableCell>
+              <StyledTableCell align="left" sx={{ width: '10%' }}>
+                :
+              </StyledTableCell>
+              <StyledTableCell align="left">{account.gender}</StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell component="th" scope="row">
+                Agama
+              </StyledTableCell>
+              <StyledTableCell align="left" sx={{ width: '10%' }}>
+                :
+              </StyledTableCell>
+              <StyledTableCell align="left">{account.religion}</StyledTableCell>
             </StyledTableRow>
           </TableBody>
         </Table>

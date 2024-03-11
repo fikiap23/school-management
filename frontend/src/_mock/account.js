@@ -10,7 +10,7 @@ export const account = {
   photoURL: '/assets/images/avatars/avatar_25.jpg',
   idUser: faker.string.uuid(),
   location: faker.location.city(),
-  birthDate: faker.date.birthdate(),
-  gender: faker.person.sexType(),
+  birthDate: faker.date.anytime(),
+  gender: sample(['Laki-Laki', 'Perempuan']),
   religion: sample(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
 };
