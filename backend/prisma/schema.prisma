@@ -28,6 +28,11 @@ enum RoleUser {
   STUDENT
 }
 
+enum Semester {
+  GANJIL
+  GENAP
+}
+
 // /*
 // |--------------------------------------------------------------------------
 // | Model
@@ -44,6 +49,7 @@ model Student {
   address    String
   birthdate  DateTime
   birthplace String
+  avatar     String
   password   String
   role       RoleUser @default(STUDENT)
   idClass    String
@@ -54,14 +60,29 @@ model Student {
   result Result[]
 }
 
-model Class {
+model AcademicYear {
   id        String   @id @default(uuid())
-  grade     String
+  name      String   @unique
+  semester  Semester
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Class     Class[]
+}
+
+model Class {
+  id             String @id @default(uuid())
+  grade          String
+  semesterId     String
+  academicYearId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  student Student[]
-  teacher TeacherOnClass[]
+  student      Student[]
+  teacher      TeacherOnClass[]
+  academicYear AcademicYear     @relation(fields: [academicYearId], references: [id])
 }
 
 model Teacher {
@@ -70,6 +91,7 @@ model Teacher {
   nuptk     String   @unique
   email     String   @unique
   password  String
+  avatar    String
   role      RoleUser @default(TEACHER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -91,6 +113,7 @@ model Admin {
 model Subject {
   id        String   @id @default(uuid())
   name      String
+  shortName String
   code      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,15 +137,19 @@ model TeacherOnClass {
 }
 
 model Result {
-  id               String   @id @default(uuid())
+  id               String @id @default(uuid())
   studentId        String
   teacherOnClassId String
-  dailyScore       String
-  midScore         String
-  endScore         String
-  finalScore       String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+
+  kkm                  Float
+  knowledgeScore       Float
+  skillsScore          Float
+  predicatKnowledge    String
+  predicatSkill        String
+  descriptionSkill     String
+  descriptionKnowledge String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 
   student        Student        @relation(fields: [studentId], references: [id], onDelete: Cascade)
   teacherOnClass TeacherOnClass @relation(fields: [teacherOnClassId], references: [id], onDelete: Cascade)
