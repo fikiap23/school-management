@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import * as bcrypt from 'bcrypt';
-import { RoleEnum } from 'src/helpers/helper';
+import { RoleEnum, TokenType } from 'src/helpers/helper';
 import { PayloadToken } from './type';
 import { LoginAdminDto } from './dto/login-admin.dto';
 @Injectable()
@@ -44,7 +44,12 @@ export class AuthService {
         },
       });
 
-      return await this.signJwtToken(user.id, RoleEnum.ADMIN);
+      return await this.signJwtToken(
+        user.id,
+        RoleEnum.ADMIN,
+        TokenType.FULL,
+        '1d',
+      );
     } catch (error) {
       throw error;
     }
@@ -68,10 +73,19 @@ export class AuthService {
         throw new BadRequestException('Invalid password');
       }
 
-      return await this.signJwtToken(user.id, RoleEnum.ADMIN);
+      return await this.signJwtToken(
+        user.id,
+        RoleEnum.ADMIN,
+        TokenType.FULL,
+        '7d',
+      );
     } catch (error) {
       throw error;
     }
+  }
+
+  async findAllAdmin() {
+    return await this.prisma.admin.findMany();
   }
 
   /*
@@ -83,16 +97,20 @@ export class AuthService {
   private async signJwtToken(
     idUser: string,
     role: RoleEnum,
+    access: string,
+    expire: string,
   ): Promise<{ access_token: string }> {
     //  payload user data for jwt token
     const payload: PayloadToken = {
       sub: idUser,
       role: role,
+      access: access,
+      expire: expire,
     };
 
     // create token with data payload
     const token = await this.jwt.signAsync(payload, {
-      expiresIn: '7d',
+      expiresIn: expire,
       secret: this.config.get('JWT_SECRET'),
     });
 
@@ -144,6 +162,11 @@ export class AuthService {
       throw new BadRequestException('Invalid token');
     }
 
-    return this.signJwtToken(decodedJwt.sub, decodedJwt.role);
+    return this.signJwtToken(
+      decodedJwt.sub,
+      decodedJwt.role,
+      TokenType.FULL,
+      '7d',
+    );
   }
 }

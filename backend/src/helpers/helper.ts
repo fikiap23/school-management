@@ -3,3 +3,9 @@ export enum RoleEnum {
   TEACHER = 'TEACHER',
   STUDENT = 'STUDENT',
 }
+
+export enum TokenType {
+  FULL = 'FULL',
+  BRANCH = 'BRANCH',
+  OTP = 'OTP',
+}
