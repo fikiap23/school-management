@@ -33,6 +33,12 @@ enum Semester {
   GENAP
 }
 
+enum Grade {
+  FIRST
+  SECOND
+  THIRD
+}
+
 // /*
 // |--------------------------------------------------------------------------
 // | Model
@@ -60,28 +66,19 @@ model Student {
   result Result[]
 }
 
-model AcademicYear {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  semester  Semester
-  startDate DateTime
-  endDate   DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Class     Class[]
-}
-
 model Class {
-  id             String @id @default(uuid())
-  grade          String
-  academicYearId String
+  id           String   @id @default(uuid())
+  name         String   @unique
+  grade        Grade
+  academicYear String
+  startDate    DateTime
+  endDate      DateTime
+  semester     Semester
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  student      Student[]
-  teacher      TeacherOnClass[]
-  academicYear AcademicYear     @relation(fields: [academicYearId], references: [id])
+  student Student[]
+  teacher TeacherOnClass[]
 }
 
 model Teacher {
