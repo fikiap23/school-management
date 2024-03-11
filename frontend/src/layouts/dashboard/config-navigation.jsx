@@ -28,6 +28,11 @@ const navConfig = [
     icon: icon('ic_blog'),
   },
   {
+    title: 'profile',
+    path: '/dashboard/profile',
+    icon: icon('ic_user'),
+  },
+  {
     title: 'Not found',
     path: '/404',
     icon: icon('ic_disabled'),

@@ -123,10 +123,10 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'kelas', label: 'Kelas' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
+                  { id: 'kelas', label: 'Kelas', align: 'center' },
+                  { id: 'location', label: 'Location', align: 'center' },
+                  { id: 'status', label: 'Status', align: 'center' },
+                  { id: 'role', label: 'Role', align: 'center' },
                   { id: '' },
                 ]}
               />
@@ -141,7 +141,7 @@ export default function UserPage() {
                       status={row.status}
                       kelas={row.kelas}
                       avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
+                      location={row.location}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />

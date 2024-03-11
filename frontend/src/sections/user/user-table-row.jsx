@@ -22,7 +22,7 @@ export default function UserTableRow({
   avatarUrl,
   kelas,
   role,
-  isVerified,
+  location,
   status,
   handleClick,
 }) {
@@ -52,15 +52,14 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{kelas}</TableCell>
+        <TableCell align="center">{kelas}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell align="center">{location}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
-
-        <TableCell>
+        <TableCell align="center">
           <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
         </TableCell>
+        <TableCell align="center">{role}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -97,7 +96,7 @@ UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
   kelas: PropTypes.any,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
+  location: PropTypes.any,
   name: PropTypes.any,
   role: PropTypes.any,
   selected: PropTypes.any,

@@ -19,7 +19,7 @@ export const users = [...Array(24)].map((_, index) => ({
   avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
   name: faker.person.fullName(),
   kelas: sample(kelas),
-  isVerified: faker.datatype.boolean(),
+  location: faker.address.city(),
   status: sample(['active', 'banned']),
   role: sample(['Murid', 'Guru', 'Admin']),
 }));
