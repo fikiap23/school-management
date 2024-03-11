@@ -9,12 +9,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { SubjectService } from './subject.service';
-import { HttpHelper } from 'src/helpers/http-helper';
+import { HttpHelper } from '../helpers/http-helper';
 import { CreateSubjectDto } from './dto/subject.dto';
-import { Access, Roles } from 'src/auth/decorator';
-import { TokenType } from 'src/helpers/helper';
+import { Access, Roles } from '../auth/decorator';
+import { TokenType } from '../helpers/helper';
 import { RoleUser } from '@prisma/client';
-import { AccessGuard, JwtGuard, RoleGuard } from 'src/auth/guard';
+import { AccessGuard, JwtGuard, RoleGuard } from '../auth/guard';
 
 @Controller('subject')
 export class SubjectController {

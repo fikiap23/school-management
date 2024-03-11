@@ -1,12 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma/prisma.service';
+
 import { CreateAdminDto } from './dto/create-admin.dto';
 import * as bcrypt from 'bcrypt';
-import { RoleEnum, TokenType } from 'src/helpers/helper';
+
 import { PayloadToken } from './type';
 import { LoginAdminDto } from './dto/login-admin.dto';
+import { RoleEnum, TokenType } from '../helpers/helper';
+import { PrismaService } from '../prisma/prisma.service';
 @Injectable()
 export class AuthService {
   constructor(

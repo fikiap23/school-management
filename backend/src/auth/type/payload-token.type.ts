@@ -1,4 +1,4 @@
-import { RoleEnum } from 'src/helpers/helper';
+import { RoleEnum } from '../../helpers/helper';
 
 export type PayloadToken = {
   sub: string;

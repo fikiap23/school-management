@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategy';
 import { MomentModule } from '@ccmos/nestjs-moment';
 import { ConfigModule } from '@nestjs/config';
-import { HelperModule } from 'src/helpers/helper.module';
+import { HelperModule } from '../helpers/helper.module';
 
 @Module({
   imports: [

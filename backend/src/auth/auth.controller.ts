@@ -9,12 +9,12 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
-import { HttpHelper } from 'src/helpers/http-helper';
+import { HttpHelper } from '../helpers/http-helper';
 import { LoginAdminDto } from './dto/login-admin.dto';
 import { AccessGuard, JwtGuard, RoleGuard } from './guard';
 import { Access, Roles } from './decorator';
 import { RoleUser } from '@prisma/client';
-import { TokenType } from 'src/helpers/helper';
+import { TokenType } from '../helpers/helper';
 @Controller('auth')
 export class AuthController {
   constructor(
