@@ -26,3 +26,26 @@ export class CreateTeacherDto {
   @IsOptional()
   avatar: string;
 }
+
+export class UpdateTeacherDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(1, 10)
+  nuptk: string;
+
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+
+  @IsString()
+  @IsOptional()
+  avatar: string;
+}
