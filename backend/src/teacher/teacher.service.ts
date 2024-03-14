@@ -1,17 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateTeacherDto } from './dto/teacher.dto';
+import { CreateTeacherDto, UpdateTeacherDto } from './dto/teacher.dto';
 import * as bcrypt from 'bcrypt';
+import { Prisma, Teacher } from '@prisma/client';
 
 @Injectable()
 export class TeacherService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll() {
+  async findAllTeacher() {
     return this.prisma.teacher.findMany();
   }
 
-  async findOne(id: string) {
+  async findOneTeacher(id: string) {
     return this.prisma.teacher.findUnique({
       where: {
         id,
@@ -19,7 +20,7 @@ export class TeacherService {
     });
   }
 
-  async createTeacer(dto: CreateTeacherDto) {
+  async createTeacher(dto: CreateTeacherDto) {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(dto.password, salt);
     return this.prisma.teacher.create({
@@ -30,6 +31,30 @@ export class TeacherService {
         password: hash,
         avatar: dto.avatar,
       },
+    });
+  }
+
+  async updateTeacher(id: string, dto: UpdateTeacherDto): Promise<Teacher> {
+    try {
+      const updatedTeacher = await this.prisma.teacher.update({
+        where: { id },
+        data: dto,
+      });
+      return updatedTeacher;
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`Teacher with id ${id} not found.`);
+      }
+      throw error;
+    }
+  }
+
+  async deleteTeacher(id: string): Promise<void> {
+    await this.prisma.teacher.delete({
+      where: { id },
     });
   }
 }
